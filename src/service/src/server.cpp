@@ -18,14 +18,14 @@ void add(const std::shared_ptr<example_interfaces::srv::AddTwoInts::Request> req
 
 int main(int argc, char **argv){
     rclcpp::init(argc, argv);
-    std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("add two ints server");
+    std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("server");
 
     rclcpp::Service<example_interfaces::srv::AddTwoInts>::SharedPtr service = 
-        node-> create_service<example_interfaces::srv::AddTwoInts>("server", &add);
+        node-> create_service<example_interfaces::srv::AddTwoInts>("add_two_ints", &add);
 
     RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "listen.");
 
     rclcpp::spin(node);
     rclcpp::shutdown();
-    
+
 }
