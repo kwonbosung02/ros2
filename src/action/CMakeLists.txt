@@ -24,12 +24,20 @@ find_package(rclcpp_components REQUIRED)
 
 add_library(server SHARED 
             src/action_server.cpp)
+add_library(client SHARED 
+            src/action_client.cpp)
 
 target_include_directories(server PRIVATE
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
             $<INSTALL_INTERFACE:include>)            
+target_include_directories(client PRIVATE
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+            $<INSTALL_INTERFACE:include>)            
 
 target_compile_definitions(server
+  PRIVATE "ACTION_BUILDING_DLL")
+
+target_compile_definitions(client
   PRIVATE "ACTION_BUILDING_DLL")
 
 ament_target_dependencies(server
@@ -38,10 +46,19 @@ ament_target_dependencies(server
   "rclcpp_action"
   "rclcpp_components")  
 
+ament_target_dependencies(client
+  "action_interfaces"
+  "rclcpp"
+  "rclcpp_action"
+  "rclcpp_components")  
+
+
 rclcpp_components_register_node(server PLUGIN "action::ActionServer" EXECUTABLE action_server)
+rclcpp_components_register_node(client PLUGIN "action::ActionClient" EXECUTABLE action_client)
 
 install(TARGETS
     server
+    client
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin)

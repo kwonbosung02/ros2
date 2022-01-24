@@ -14,7 +14,7 @@ namespace action{
             using Fibonacci = action_interfaces::action::Fibonacci;
             using GoalHandleFibonacci = rclcpp_action::ServerGoalHandle<Fibonacci>;
 
-            explicit ActionServer(const rclcpp::NodeOptions & options = rclcpp::NodeOptions()) : Node("server", options){
+            explicit ActionServer(const rclcpp::NodeOptions & options = rclcpp::NodeOptions()) : Node("action_server", options){
                 using namespace std::placeholders;
                 this->action_server_ = rclcpp_action::create_server<Fibonacci>(
                     this,
